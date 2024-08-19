@@ -16,8 +16,24 @@ namespace GrpcCqrs101.Services
         {
             var reply = new HelloReply
             {
-                Message = "Hello " + request.Name,
+                Message = "Hello",
                 FirstName = "World!!"
+            };
+
+            return Task.FromResult(reply);
+        }
+
+        public override Task<ConsumerResponse> GetCustomer(ConsumerRequest request, ServerCallContext context)
+        {
+            var reply = new ConsumerResponse
+            {
+                Id = request.Id,
+                FirstName = "Nattapong",
+                LastName = "Promthong",
+                Address = "bankkok",
+                MobileNumber = "1150",
+                CreatedAt = "today",
+                UpdatedAt = "today",
             };
 
             return Task.FromResult(reply);
