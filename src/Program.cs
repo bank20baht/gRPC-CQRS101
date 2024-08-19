@@ -1,9 +1,13 @@
 using GrpcCqrs101.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddGrpc();
-
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MS_SQL_URL"));
+});
 var app = builder.Build();
 
 app.MapGrpcService<GreeterService>();
