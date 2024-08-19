@@ -38,5 +38,40 @@ namespace GrpcCqrs101.Services
 
             return Task.FromResult(reply);
         }
+
+        public override Task<ConsumerListResponse> GetListCustomer(RequestMessage req, ServerCallContext context)
+        {
+            var consumers = new List<ConsumerResponse>
+    {
+        new ConsumerResponse
+        {
+            Id = "1",
+            FirstName = "bank",
+            LastName = "20baht",
+            Address = "Bangkok",
+            MobileNumber = "1150",
+            CreatedAt = "today",
+            UpdatedAt = "today",
+        },
+        new ConsumerResponse
+        {
+            Id = "2",
+            FirstName = "Nattapong",
+            LastName = "Promthong",
+            Address = "Bangkok",
+            MobileNumber = "1150",
+            CreatedAt = "today",
+            UpdatedAt = "today",
+        }
+    };
+
+            // Create the response object and assign the list of consumers
+            var reply = new ConsumerListResponse
+            {
+                Consumers = { consumers }
+            };
+
+            return Task.FromResult(reply);
+        }
     }
 }
