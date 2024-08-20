@@ -11,9 +11,9 @@ public class CustomerModel
     public DateTime created_at { get; set; }
     public DateTime updated_at { get; set; }
 
-    public static ConsumerResponse EntityToResponse(Customer customer)
+    public static CustomerResponse EntityToResponse(Customer customer)
     {
-        return new ConsumerResponse
+        return new CustomerResponse
         {
             Id = customer.id.ToString(),
             FirstName = customer.first_name,

@@ -3,22 +3,33 @@ syntax = "proto3";
 option csharp_namespace = "GrpcCqrs101";
 
 service Consumer {
-  rpc GetCustomer (ConsumerRequest) returns (ConsumerResponse);
+  rpc GetCustomer (CustomerRequest) returns (CustomerResponse);
   rpc ListCustomer (RequestMessage) returns (ConsumerListResponse);
-  rpc 
+  rpc AddCustomer (CustomerRequestBody) returns (Response);
 }
 
-message ConsumerRequest {
+message CustomerRequestBody {
+  string first_name  = 1;
+  string last_name = 2;
+  string address  = 3;
+  string mobile_number = 4;
+}
+
+message Response {
+  string message = 1;
+}
+
+message CustomerRequest {
   string id = 1;
 }
   
 message RequestMessage {}
   
 message ConsumerListResponse {
-  repeated ConsumerResponse consumers = 1;
+  repeated CustomerResponse consumers = 1;
 }
   
-message ConsumerResponse {
+message CustomerResponse {
   string id = 1;
   string first_name = 2;
   string last_name = 3;

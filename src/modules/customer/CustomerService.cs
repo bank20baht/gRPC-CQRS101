@@ -16,7 +16,7 @@ namespace GrpcCqrs101.Services
             _customerRepository = customerRepository;
         }
 
-        public override async Task<ConsumerResponse> GetCustomer(ConsumerRequest request, ServerCallContext context)
+        public override async Task<CustomerResponse> GetCustomer(CustomerRequest request, ServerCallContext context)
         {
             if (!Guid.TryParse(request.Id, out var requestId))
             {
