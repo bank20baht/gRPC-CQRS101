@@ -25,8 +25,12 @@ public class CustomerModel
         };
     }
 
-    public static List<ConsumerResponse> EntityToResponse(List<Customer> customers)
+    public static ConsumerListResponse EntityToResponse(List<Customer> customers)
     {
-        return customers.Select(c => EntityToResponse(c)).ToList();
+        var consumerMapping = customers.Select(c => EntityToResponse(c)).ToList();
+        return new ConsumerListResponse
+        {
+            Consumers = { consumerMapping }
+        };
     }
 }
