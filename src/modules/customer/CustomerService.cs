@@ -1,6 +1,8 @@
 using Grpc.Core;
 using GrpcCqrs101;
 using GrpcCqrs101.Repository;
+using GrpcCqrs101.Models;
+
 
 namespace GrpcCqrs101.Services
 {
@@ -22,19 +24,11 @@ namespace GrpcCqrs101.Services
                 throw new RpcException(new Status(StatusCode.NotFound, "Customer not found"));
             }
 
-            var reply = new ConsumerResponse
-            {
-                Id = customer.id.ToString(),
-                FirstName = customer.first_name,
-                LastName = customer.last_name,
-                Address = customer.address,
-                MobileNumber = customer.mobile_number,
-                CreatedAt = customer.created_at.ToString(),
-                UpdatedAt = customer.updated_at.ToString(),
-            };
+            var reply = CustomerModel.EntityToResponse(customer); // Corrected call to the static method
 
             return reply;
         }
+
 
     }
 
