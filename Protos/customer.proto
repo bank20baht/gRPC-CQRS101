@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcCqrs101";
+
+service Consumer {
+  rpc GetCustomer (ConsumerRequest) returns (ConsumerResponse);
+  rpc GetListCustomer (RequestMessage) returns (ConsumerListResponse);
+}
+
+message ConsumerRequest {
+  string id = 1;
+}
+  
+message RequestMessage {}
+  
+message ConsumerListResponse {
+  repeated ConsumerResponse consumers = 1;
+}
+  
+message ConsumerResponse {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string address = 4;
+  string mobile_number =5; 
+  string created_at = 6;
+  string updated_at = 7;
+}
