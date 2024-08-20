@@ -21,7 +21,7 @@ namespace GrpcCqrs101.Services
             var customer = await _customerRepository.GetCustomer(new Guid(request.Id));
             if (customer == null)
             {
-                throw new CustomerNotFoundError();
+                throw new CustomerNotFoundError("not found customer resource");
             }
 
             var reply = CustomerModel.EntityToResponse(customer);
