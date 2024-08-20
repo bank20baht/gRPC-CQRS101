@@ -24,4 +24,9 @@ public class CustomerModel
             UpdatedAt = customer.updated_at.ToString(),
         };
     }
+
+    public static List<ConsumerResponse> EntityToResponse(List<Customer> customers)
+    {
+        return customers.Select(c => EntityToResponse(c)).ToList();
+    }
 }

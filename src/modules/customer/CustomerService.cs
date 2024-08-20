@@ -30,6 +30,19 @@ namespace GrpcCqrs101.Services
         }
 
 
+        public override async Task<ConsumerListResponse> GetListCustomer(RequestMessage req, ServerCallContext context)
+        {
+            var customers = await _customerRepository.ListCustomer();
+            var consumers = CustomerModel.EntityToResponse(customers);
+
+            var reply = new ConsumerListResponse
+            {
+                Consumers = { consumers }
+            };
+
+            return reply;
+        }
     }
+
 
 }
