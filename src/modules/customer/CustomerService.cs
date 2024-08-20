@@ -2,7 +2,7 @@ using Grpc.Core;
 using GrpcCqrs101;
 using GrpcCqrs101.Repository;
 using GrpcCqrs101.Models;
-
+using GrpcCqrs101.RpcError;
 
 namespace GrpcCqrs101.Services
 {
@@ -21,7 +21,7 @@ namespace GrpcCqrs101.Services
             var customer = await _customerRepository.GetCustomer(new Guid(request.Id));
             if (customer == null)
             {
-                throw new RpcException(new Status(StatusCode.NotFound, "Customer not found"));
+                throw new CustomerNotFoundError();
             }
 
             var reply = CustomerModel.EntityToResponse(customer);
