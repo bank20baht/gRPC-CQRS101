@@ -5,18 +5,7 @@ option csharp_namespace = "GrpcCqrs101";
 service Consumer {
   rpc GetCustomer (CustomerRequest) returns (CustomerResponse);
   rpc ListCustomer (RequestMessage) returns (ConsumerListResponse);
-  rpc AddCustomer (CustomerRequestBody) returns (Response);
-}
 
-message CustomerRequestBody {
-  string first_name  = 1;
-  string last_name = 2;
-  string address  = 3;
-  string mobile_number = 4;
-}
-
-message Response {
-  string message = 1;
 }
 
 message CustomerRequest {
