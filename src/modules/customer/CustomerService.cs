@@ -18,6 +18,10 @@ namespace GrpcCqrs101.Services
 
         public override async Task<ConsumerResponse> GetCustomer(ConsumerRequest request, ServerCallContext context)
         {
+            if (!Guid.TryParse(request.Id, out var requestId))
+            {
+                throw new CustomerBadRequestError("Request ID is not a valid GUID.");
+            }
             var customer = await _customerRepository.GetCustomer(new Guid(request.Id));
             if (customer == null)
             {

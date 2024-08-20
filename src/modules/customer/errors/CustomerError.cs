@@ -9,3 +9,11 @@ public class CustomerNotFoundError : RpcException
     {
     }
 }
+
+public class CustomerBadRequestError : RpcException
+{
+    public CustomerBadRequestError(string message = "id not Guid type")
+        : base(new Status(StatusCode.InvalidArgument, message))
+    {
+    }
+}
