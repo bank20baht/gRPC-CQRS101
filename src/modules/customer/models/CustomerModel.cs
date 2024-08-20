@@ -33,4 +33,15 @@ public class CustomerModel
             Consumers = { consumerMapping }
         };
     }
+
+    public static Customer ToEntity(CustomerRequestBody customer)
+    {
+        return new Customer
+        {
+            first_name = customer.FirstName,
+            last_name = customer.LastName,
+            address = customer.Address,
+            mobile_number = customer.MobileNumber
+        };
+    }
 }

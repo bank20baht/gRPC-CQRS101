@@ -41,6 +41,18 @@ namespace GrpcCqrs101.Services
 
             return reply;
         }
+
+        public override async Task<CreateResponse> AddCustomer(CustomerRequestBody body, ServerCallContext context)
+        {
+            var entity = CustomerModel.ToEntity(body);
+            var customer = await _customerRepository.AddCustomer(entity);
+            var reply = new CreateResponse
+            {
+                Message = "create successful"
+            };
+
+            return reply;
+        }
     }
 
 
