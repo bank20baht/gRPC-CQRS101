@@ -1,67 +1,41 @@
 using Grpc.Core;
 using GrpcCqrs101;
-
+using GrpcCqrs101.Repository;
 
 namespace GrpcCqrs101.Services
 {
     public class CustomerService : Consumer.ConsumerBase
     {
         private readonly ILogger<GreeterService> _logger;
-        public CustomerService(ILogger<GreeterService> logger)
+        private readonly CustomerRepository _customerRepository;
+        public CustomerService(ILogger<GreeterService> logger, CustomerRepository customerRepository)
         {
             _logger = logger;
+            _customerRepository = customerRepository;
         }
 
-        public override Task<ConsumerResponse> GetCustomer(ConsumerRequest request, ServerCallContext context)
+        public override async Task<ConsumerResponse> GetCustomer(ConsumerRequest request, ServerCallContext context)
         {
+            var customer = await _customerRepository.GetCustomer(new Guid(request.Id));
+            if (customer == null)
+            {
+                throw new RpcException(new Status(StatusCode.NotFound, "Customer not found"));
+            }
+
             var reply = new ConsumerResponse
             {
-                Id = request.Id,
-                FirstName = "Nattapong",
-                LastName = "Promthong",
-                Address = "bankkok",
-                MobileNumber = "1150",
-                CreatedAt = "today",
-                UpdatedAt = "today",
+                Id = customer.id.ToString(),
+                FirstName = customer.first_name,
+                LastName = customer.last_name,
+                Address = customer.address,
+                MobileNumber = customer.mobile_number,
+                CreatedAt = customer.created_at.ToString(),
+                UpdatedAt = customer.updated_at.ToString(),
             };
 
-            return Task.FromResult(reply);
+            return reply;
         }
 
-        public override Task<ConsumerListResponse> GetListCustomer(RequestMessage req, ServerCallContext context)
-        {
-            var consumers = new List<ConsumerResponse>
-    {
-        new ConsumerResponse
-        {
-            Id = "1",
-            FirstName = "bank",
-            LastName = "20baht",
-            Address = "Bangkok",
-            MobileNumber = "1150",
-            CreatedAt = "today",
-            UpdatedAt = "today",
-        },
-        new ConsumerResponse
-        {
-            Id = "2",
-            FirstName = "Nattapong",
-            LastName = "Promthong",
-            Address = "Bangkok",
-            MobileNumber = "1150",
-            CreatedAt = "today",
-            UpdatedAt = "today",
-        }
-    };
-
-            var reply = new ConsumerListResponse
-            {
-                Consumers = { consumers }
-            };
-
-            return Task.FromResult(reply);
-        }
     }
-
 
 }

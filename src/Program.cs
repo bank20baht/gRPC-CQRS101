@@ -1,9 +1,11 @@
 using GrpcCqrs101.Services;
 using Microsoft.EntityFrameworkCore;
+using GrpcCqrs101.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddGrpc();
+builder.Services.AddScoped<CustomerRepository>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("MS_SQL_URL"));
