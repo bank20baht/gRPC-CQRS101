@@ -24,7 +24,7 @@ namespace GrpcCqrs101.Services
                 throw new RpcException(new Status(StatusCode.NotFound, "Customer not found"));
             }
 
-            var reply = CustomerModel.EntityToResponse(customer); // Corrected call to the static method
+            var reply = CustomerModel.EntityToResponse(customer);
 
             return reply;
         }
