@@ -26,7 +26,7 @@ namespace GrpcCqrs101.Services
             var response = await _mediator.Send(new GetCustomerQuery(requestId));
             if (response == null)
             {
-                throw new CustomerNotFoundError("Customer not found.");
+                throw new NotFoundException("Customer not found.");
             }
 
             return response;
