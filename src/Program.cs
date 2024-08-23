@@ -4,12 +4,19 @@ using GrpcCqrs101.IRepository;
 using Microsoft.EntityFrameworkCore;
 using MediatR;
 using System.Reflection;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddGrpc();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddValidatorsFromAssemblyContaining<AddCustomerCommandValidator>();
+
+//  MediatR pipeline behaviors
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
+builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlingPipelineBehavior<,>));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
