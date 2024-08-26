@@ -21,7 +21,7 @@ public class ExceptionHandlingInterceptor : Interceptor
         {
             throw new RpcException(new Status(StatusCode.InvalidArgument, GetValidationErrors(ex)));
         }
-        catch (NotFoundException ex)
+        catch (CustomerNotFoundError ex)
         {
             throw new RpcException(new Status(StatusCode.NotFound, ex.Message));
         }

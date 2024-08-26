@@ -2,9 +2,9 @@ using Grpc.Core;
 
 namespace GrpcCqrs101.RpcError;
 
-public class NotFoundException : RpcException
+public class CustomerNotFoundError : RpcException
 {
-    public NotFoundException(string message = "not found resource")
+    public CustomerNotFoundError(string message = "not found resource")
         : base(new Status(StatusCode.NotFound, message))
     {
     }

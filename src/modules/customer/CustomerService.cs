@@ -7,26 +7,19 @@ namespace GrpcCqrs101.Services
 {
     public class CustomerService : Consumer.ConsumerBase
     {
-        private readonly ILogger<CustomerService> _logger;
         private readonly IMediator _mediator;
 
-        public CustomerService(ILogger<CustomerService> logger, IMediator mediator)
+        public CustomerService(IMediator mediator)
         {
-            _logger = logger;
             _mediator = mediator;
         }
 
         public override async Task<CustomerResponse> GetCustomer(CustomerRequest request, ServerCallContext context)
         {
-            if (!Guid.TryParse(request.Id, out var requestId))
-            {
-                throw new CustomerBadRequestError("Request ID is not a valid GUID.");
-            }
-
-            var response = await _mediator.Send(new GetCustomerQuery(requestId));
+            var response = await _mediator.Send(new GetCustomerQuery(new Guid(request.Id)));
             if (response == null)
             {
-                throw new NotFoundException("Customer not found.");
+                throw new CustomerNotFoundError("Customer not found.");
             }
 
             return response;
